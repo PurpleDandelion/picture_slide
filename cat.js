@@ -6,7 +6,7 @@ var Cat = function (src, name) {
 var cat1 = new Cat('img/watch.jpg', '谁在看本宝宝');
 var cat2 = new Cat('img/2.jpg', 'two');
 var cat3 = new Cat('img/sleep.jpg', '睡觉啦');
-var cat4 = new Cat('img/jump.jpg', '你跳我就跳');
+var cat4 = new Cat('img/jump.jpg', '你挑我就跳');
 var cat5 = new Cat('img/angry.jpg', '本宝宝生气了');
 
 var catarr = [];

@@ -33,7 +33,7 @@ var model = {
 
 /* =========== octopus ===========*/
 var octopus = {
-	init: function (argument) {
+	init: function () {
 		// model数组中的第一个元素
         model.currentCat = model.cats[0];
 
@@ -53,10 +53,10 @@ var octopus = {
 		//设置当前的猫
         model.currentCat = cat;
 	},
-	setCurrentListCat: function (argument) {
+	setCurrentListCat: function () {
 		// 设置当前列表对应的猫
 	},
-	incrementCounter: function (argument) {
+	incrementCounter: function () {
 		// 浏览量
         model.currentCat.clickCount++;
         catView.render();
@@ -71,6 +71,11 @@ var catView = {
 		this.catNameElem = document.getElementById('name');
         this.catImageElem = document.getElementById('img');
         this.countElem = document.getElementById('clickcount');
+
+        // this.catImageElem.addEventListener('click', function(){
+        //     // octopus.incrementCounter();
+        //     // console.log('a');
+        // });
 
         this.render();
 	},
@@ -88,23 +93,24 @@ var catListView = {
 	init: function () {
 		// 初始化列表预览
         this.catListElem = document.getElementById('cat-list');
-		this.render();
-		this.catListOne = this.catListElem.getElementsByTagName('li')[0];
-		this.active(this.catListOne);
+		this.initOneImg();
 		this.click();
 	},
-	render: function (catli) {
+	initOneImg: function () {
 		// 输出列表
 		var cats = model.cats;
         this.catListElem.innerHTML = '';
-		for (var i = 0; i < cats.length; i++) {
+        this.catListElem.innerHTML += '<li class="active">' + 
+	                  	 '<a href="javascript:;"><img src="' + cats[0].imgSrc + '"/></a>'+
+	                 	 '</li>';
+		for (var i = 1; i < cats.length; i++) {
 	      	this.catListElem.innerHTML += '<li>' + 
 	                  	 '<a href="javascript:;"><img src="' + cats[i].imgSrc + '"/></a>'+
 	                 	 '</li>';
 		}
-		if (catli !== undefined && catli !== '') {
-			this.active(catli);
-		}
+	},
+	render: function (li) {
+		this.active(li);
 	},
 	active: function (catli) {
 		//加active类
@@ -121,7 +127,8 @@ var catListView = {
 		var cats = model.cats;
 		for (var i = 0; i < sli.length; i++) {
 			(function (i) {
-				sli[i].addEventListener('click', function(){
+				sli[i].getElementsByTagName('img')[0].addEventListener('click', function(){
+            		octopus.incrementCounter();
                     octopus.setCurrentCat(cats[i]);
                     catView.render();
                     _this.render(sli[i]);

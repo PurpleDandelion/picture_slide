@@ -72,11 +72,6 @@ var catView = {
         this.catImageElem = document.getElementById('img');
         this.countElem = document.getElementById('clickcount');
 
-        // this.catImageElem.addEventListener('click', function(){
-        //     // octopus.incrementCounter();
-        //     // console.log('a');
-        // });
-
         this.render();
 	},
 	render: function () {

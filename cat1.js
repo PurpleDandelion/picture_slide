@@ -2,6 +2,7 @@
 
 var model = {
     currentCat: null,
+    isShowAdmin: false,
 	cats: [
         {
             clickCount : 0,
@@ -40,6 +41,7 @@ var octopus = {
         //初始化预览大图和列表
         catListView.init();
         catView.init();
+        adminView.init();
 	},
 	getCurrentCat: function () {
 		//获取当前的猫
@@ -52,9 +54,6 @@ var octopus = {
 	setCurrentCat: function (cat) {
 		//设置当前的猫
         model.currentCat = cat;
-	},
-	setCurrentListCat: function () {
-		// 设置当前列表对应的猫
 	},
 	incrementCounter: function () {
 		// 浏览量
@@ -118,7 +117,7 @@ var catListView = {
 	click: function () {
 		// 添加点击事件
 		var _this = this;
-		var sli = document.getElementsByTagName('li');
+		var sli = this.catListElem.getElementsByTagName('li');
 		var cats = model.cats;
 		for (var i = 0; i < sli.length; i++) {
 			(function (i) {
@@ -130,6 +129,38 @@ var catListView = {
 				}, false);
 			})(i);
 		}
+	}
+};
+
+/* ======== admin setting ===========*/
+var adminView = {
+	init: function () {
+		this.showSettingElem = document.getElementById('showsetting');
+		this.adminSettingElem = document.getElementById('adminsetting');
+		var aclassList = this.adminSettingElem.classList;
+		this.showSettingElem.addEventListener("click", function () {
+			if (aclassList.contains('none')) {
+				aclassList.remove('none');
+			} else {
+				aclassList.add('none');
+			}
+		}, false);
+		this.save();
+	},
+	save: function () {
+		this.saveElem = document.getElementById('save');
+		this.saveElem.addEventListener('click', function () {
+			var sname = document.getElementById('sname').value;
+			var surl = document.getElementById('surl').value;
+			var scount = document.getElementById('scount').value;
+
+			var savedcat = {};
+			savedcat.clickCount = scount;
+			savedcat.name = sname;
+			savedcat.imgSrc = surl;
+            octopus.setCurrentCat(savedcat);
+            catView.render();
+		}, false);
 	}
 };
 
